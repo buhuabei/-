@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="angular/angular.js"></script>
+    <script src="angular/ui-router.js"></script>
+    <title>Document</title>
+</head>
+<body ng-controller="ctrl">
+      <div class="box">
+           <div class="header">
+               <span>< <img src="img/logo白.png"></span><span>></span>
+           </div>
+           <div class="section">
+                <div class="content">
+                     <div class="content_title"><span>—</span><h3>{{title}}</h3><span>—</span></div>
+                     <div class="text">{{content}}</div>
+                </div>
+                <dl class="{{x.class}}" ng-repeat="x in list" ng-click="index($index)">
+                        <dt><img src={{x.touxiang}}></dt>
+                        <dd><span>{{x.txt}}</span></dd>
+                </dl>
+            </div>
+      </div>
+      
+</body>
+     <script>
+         var app = angular.module('app', ['ui.router']);
+     </script>
+     <script>
+         app.controller("ctrl",function($scope,$http){
+               $http.get('json/ind.json').then(function(data){
+                   $scope.list=data.data.data;
+               $scope.content=$scope.list[1].content;
+               $scope.title=$scope.list[1].txt;
+               })
+               
+               $scope.index=function(index){
+                    $scope.content=$scope.list[index].content;
+                    $scope.title=$scope.list[index].txt;
+               }
+         })
+         
+     </script>
+</html>
